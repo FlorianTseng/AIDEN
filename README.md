@@ -13,7 +13,14 @@ transfers zero-shot to out-of-distribution systems (water, AlMg, amorphous Si,
 twisted bilayer graphene) with full-grid inference tens of times faster than
 the evaluated baselines. Architecture and experiment details are in the paper.
 
-## Installation
+![AIDEN architecture overview](assets/model-architecture.jpg)
+
+*Overview of the AIDEN architecture (paper Fig. 1): SAD-inspired one-center
+density and periodic graph representation, geometry-informed embedding, the
+Cartesian ACE + TECE equivariant encoder, and the continuous GTO density
+decoder.*
+
+## 📦 Installation
 
 Python >= 3.10 with PyTorch >= 2.0 is required.
 
@@ -26,7 +33,7 @@ searches. Without it the package falls back to an exact vectorized NumPy
 implementation (select with the `AIDEN_GRAPH_BACKEND` environment variable:
 `auto`, `torch_cluster`, or `numpy`).
 
-## Quick start
+## 🚀 Quick start
 
 Run the GaAs equivariance check on CPU (no datasets required):
 
@@ -42,7 +49,7 @@ Fail-fast check of data pipeline, model forward/backward, and equivariance:
 python smoke_test.py
 ```
 
-## Using the pretrained checkpoints
+## 🧠 Using the pretrained checkpoints
 
 `checkpoints/aiden-pbe.pt` (in this repository) is the PBE-pretrained L = 4
 model — 4.46 M parameters, 0.454 % validation NMAE — used for all zero-shot
@@ -52,7 +59,7 @@ OOD and TBG evaluations in the paper. Checkpoints of every other paper run
 full training state with EMA weights under `ema_model`, which the inference
 entry points select by default.
 
-### Predict the charge density of a new structure
+### 🔮 Predict the charge density of a new structure
 
 Full FFT-grid prediction for a structure supplied as a CHGCAR (the file only
 provides structure, cell, and grid — no reference density is needed for the
@@ -111,7 +118,7 @@ model.load_state_dict(ckpt["ema_model"])   # EMA weights; ckpt["model"] for raw
 model.eval()
 ```
 
-### Fine-tune on new data
+### 🔧 Fine-tune on new data
 
 Pack your training densities with `aiden.prepare_data` (see below), then start
 from a pretrained checkpoint with `--resume-mode model_only` — this loads the
@@ -137,7 +144,7 @@ Two ready-made transfer recipes from the paper (ECD HSE06) are recorded in
 from scratch. To continue an interrupted run exactly where it stopped, use
 `--resume runs/<run>/last.pt` with the default `--resume-mode full`.
 
-## Data preparation
+## 📥 Data preparation
 
 Training data are **not** included in this repository. The crystal benchmarks
 come from the [ECD dataset](https://openreview.net/forum?id=SBCMNc3Mq3)
@@ -160,7 +167,7 @@ The HSE06 runs use the recalculated ECD HSE06 charge densities, packed the
 same way into `data/aiden-hse`. `data/elem-des.csv` defines the
 133-dimensional element input (118-dim one-hot + 15 elemental descriptors).
 
-## Training and evaluation
+## ⚙️ Training and evaluation
 
 ```bash
 python train.py \
@@ -190,7 +197,7 @@ python evaluate.py \
 Reports the density MAE and the per-structure NMAE
 `sum|rho_pred - rho_ref| / sum|rho_ref|` used in the paper.
 
-## Repository layout
+## 🗂️ Repository layout
 
 ```
 aiden/                    model and data package (model, encoder, TECE operators,
@@ -212,7 +219,7 @@ tbg/                      twisted-bilayer-graphene benchmark
 tests/                    unit tests for the downloader
 ```
 
-## Reproducing the paper experiments
+## 🔬 Reproducing the paper experiments
 
 Each experiment section of the paper maps to one directory: train with the
 `configs/` references (benchmarks, Table 1 and Figs. 2/8/9 via `runs/`),
@@ -222,7 +229,7 @@ Table 2 and Fig. 3), and `tbg/` (twisted bilayer graphene, Figs. 4/10 and
 Tables 5-9). Every directory has its own README with the protocol and the
 headline numbers.
 
-## Citation
+## 📚 Citation
 
 If you use AIDEN in your work, please cite:
 
@@ -238,7 +245,7 @@ If you use AIDEN in your work, please cite:
 }
 ```
 
-## Third-party components
+## 🧩 Third-party components
 
 `aiden/e3nn` contains a minimal real-basis `wigner_3j` implementation whose
 convention follows e3nn (MIT); see `THIRD_PARTY_NOTICES.md`. The equivariance
