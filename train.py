@@ -768,6 +768,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--resume", default=None)
     parser.add_argument("--resume-mode", choices=["full", "model_only"], default="full")
+    parser.add_argument(
+        "--freeze-encoder",
+        action="store_true",
+        help="Freeze the encoder and optimize the decoder only (decoder-only transfer)",
+    )
     parser.add_argument("--model-name", default="Aiden")
     return parser.parse_args()
 
@@ -1020,10 +1025,19 @@ def main() -> None:
             log_path,
         )
 
+    if args.freeze_encoder:
+        for parameter in model.encoder.parameters():
+            parameter.requires_grad_(False)
+        log_message(log_path, "encoder frozen; decoder-only transfer")
+
     optimizer = torch.optim.Adam(
         [
             {
-                "params": model.encoder.parameters(),
+                "params": [
+                    parameter
+                    for parameter in model.encoder.parameters()
+                    if parameter.requires_grad
+                ],
                 "lr": float(args.encoder_lr),
                 "name": "encoder",
             },

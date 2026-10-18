@@ -6,78 +6,12 @@ real-space charge-density learning.
 **Paper**: [Neural-Network Solutions to Real-Space Charge Density and Generalization](https://arxiv.org/abs/2609.14906) (arXiv:2609.14906)
 
 AIDEN predicts the ground-state charge density of periodic crystals and finite
-molecules as a *continuous* scalar field that can be evaluated at arbitrary
-real-space positions. An equivariant Cartesian encoder — a geometry-informed
-embedding (GIE), a Cartesian atomic cluster expansion (ACE), and a tensor edge
-cluster expansion (TECE) with radial rotary attention (RRA) — produces
-irreducible Cartesian tensor features per atom; a continuous low-rank decoder
-then contracts these tensors with atom-centered Gaussian-type orbitals at the
-requested query positions. Query points never carry hidden states, so the
-expensive geometric encoding runs once per structure and is reused for every
-density query, from 5,000 training probes up to ten-million-point full FFT
-grids.
-
-The predicted density decomposes into a learnable element-dependent one-center
-contribution `rho_init` and an environment-dependent low-rank field `rho_env`,
-which separates the dominant atomic density structure from the redistribution
-induced by the local chemical environment.
-
-## Results overview
-
-Benchmark NMAE of the total density (paper Table 1; ChargE3Net / AIDEN PBE
-columns are the L = 3 / L = 4 pair, the AIDEN HSE pair is from-scratch /
-fine-tuned):
-
-| dataset | eqDeepDFT | ChargE3Net | NeuralSCF | SCDP | ELECTRA | BOA | AIDEN |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| ECD PBE (140,646 crystals) | 0.799 | 0.685 / 0.523 | – | – | – | – | **0.621 / 0.454** |
-| ECD HSE06 (7,147 crystals) | – | 1.534 | – | – | – | – | **1.431 / 1.301** |
-| QM9 (133,885 molecules) | 0.284 | 0.196 | 0.197 | 0.178 | 0.177 | **0.134** | 0.163 |
-
-Zero-shot out-of-distribution transfer (paper Table 2; liquid water, Al54Mg54,
-amorphous Si against freshly converged PBE-SCF references): AIDEN reaches
-0.95–1.88 % density NMAE with fixed-density energies within 3.5 meV/atom of
-SCF, and full-grid inference is 48–76x faster than the evaluated ChargE3Net
-implementation and roughly 60–136x faster than the corresponding fixed-density
-VASP calculations. On twisted bilayer graphene (21.79 / 13.17 / 9.43 degrees),
-AIDEN densities give aligned band MAEs of 8.42 / 7.41 / 11.47 meV within
-E_F +/- 5 eV at 9.7–15.3x lower inference cost than ChargE3Net.
-
-## Repository layout
-
-```
-aiden/                    model and data package
-  model.py                Aiden model: continuous GTO decoder, rho_init + rho_env
-  encoder.py              equivariant Cartesian encoder (GIE + Cartesian ACE + TECE)
-  cartesian.py            irreducible Cartesian tensor engine (CG-free)
-  tece_ops/               tensor edge cluster expansion operators
-  e3nn/                   minimal vendored real-basis wigner_3j (see THIRD_PARTY_NOTICES.md)
-  data.py                 CHGCAR dataset, periodic graph builders, packed-H5 reader
-  fast_infer.py           encoder-cached streaming full-grid inference
-  prepare_data.py         pack downloaded ECD CHGCAR archives into training shards
-  prepare_qm9_data.py     pack QM9 charge-density HDF5 into isolation-cell shards
-  download_ecd_pbe.py     resumable ECDBench archive downloader
-train.py                  training entry point
-evaluate.py               held-out evaluation (MAE + per-structure NMAE)
-predict.py                single-structure prediction
-infer_full_grid.py        full-FFT-grid inference for one CHGCAR structure
-smoke_test.py             fail-fast data/model/equivariance smoke test
-configs/                  reference training configurations of the paper runs
-checkpoints/aiden-pbe.pt  PBE-pretrained L=4 checkpoint used for zero-shot transfer
-runs/                     training-run registry: configs, full logs, metric tables,
-                          and the plotting scripts behind Fig. 2 / 8 / 9
-ablation/                 structural ablations of the paper's Table 3 (8 variants)
-benchmarks/               inference-speed and parameter-count comparisons vs baselines
-examples/equivariance/    E(3)-equivariance check + density-decomposition cases
-ood/                      out-of-distribution benchmark (water, AlMg, amorphous Si)
-tbg/                      twisted-bilayer-graphene benchmark (bands, DOS, forces)
-data/elem-des.csv         element descriptors (133-dim input features)
-tests/                    unit tests for the downloader
-```
-
-Model weights of every paper run are provided through the repository's
-[releases](https://github.com/FlorianTseng/AIDEN/releases); training data are
-not included (see below).
+molecules as a continuous scalar field, evaluated at arbitrary real-space
+positions. On the paper's benchmarks it reaches 0.45 % density NMAE on ECD PBE
+(L = 4), 1.30 % on ECD HSE06 after fine-tuning, and 0.16 % on QM9, and it
+transfers zero-shot to out-of-distribution systems (water, AlMg, amorphous Si,
+twisted bilayer graphene) with full-grid inference tens of times faster than
+the evaluated baselines. Architecture and experiment details are in the paper.
 
 ## Installation
 
@@ -94,8 +28,7 @@ implementation (select with the `AIDEN_GRAPH_BACKEND` environment variable:
 
 ## Quick start
 
-Run the GaAs equivariance check on CPU (no datasets required; downloads
-nothing):
+Run the GaAs equivariance check on CPU (no datasets required):
 
 ```bash
 cd examples/equivariance
@@ -103,8 +36,27 @@ cd examples/equivariance
 ./run.sh --grid 16 16 16 --device cpu
 ```
 
-Predict a complete FFT-grid density for an existing CHGCAR with the released
-PBE checkpoint:
+Fail-fast check of data pipeline, model forward/backward, and equivariance:
+
+```bash
+python smoke_test.py
+```
+
+## Using the pretrained checkpoints
+
+`checkpoints/aiden-pbe.pt` (in this repository) is the PBE-pretrained L = 4
+model — 4.46 M parameters, 0.454 % validation NMAE — used for all zero-shot
+OOD and TBG evaluations in the paper. Checkpoints of every other paper run
+(PBE/QM9 at L = 0..4, HSE variants) are downloadable from the
+[releases](https://github.com/FlorianTseng/AIDEN/releases); each stores the
+full training state with EMA weights under `ema_model`, which the inference
+entry points select by default.
+
+### Predict the charge density of a new structure
+
+Full FFT-grid prediction for a structure supplied as a CHGCAR (the file only
+provides structure, cell, and grid — no reference density is needed for the
+prediction itself):
 
 ```bash
 python infer_full_grid.py \
@@ -118,7 +70,7 @@ python infer_full_grid.py \
 ```
 
 The output `full_grid_prediction.npz` stores `density_pred` flat in VASP
-CHGCAR order (x fastest). Reconstruct it with
+CHGCAR order (x fastest); reconstruct the 3-D array with
 
 ```python
 import numpy as np
@@ -126,13 +78,72 @@ payload = np.load("results/my-system/full_grid_prediction.npz")
 rho = payload["density_pred"].reshape(payload["grid_shape"], order="F")
 ```
 
+If you only have a structure file (POSCAR/cif), first wrap it in a CHGCAR
+with the FFT grid you want — for example with ASE:
+
+```python
+import io
+import numpy as np
+from ase.io import read, write
+
+atoms = read("structure.cif")
+grid = (120, 120, 120)                     # your chosen FFT grid
+
+buf = io.StringIO()
+write(buf, atoms, format="vasp", direct=True, vasp5=True)
+lines = buf.getvalue().rstrip("\n").splitlines()
+lines.append("  ".join(str(n) for n in grid))
+lines.extend(f" {0.0:.11E}" for _ in range(int(np.prod(grid))))
+lines.append("augmented occupancies   1 1")
+open("CHGCAR", "w").write("\n".join(lines) + "\n")
+```
+
+Use the same checkpoint directly in Python (`predict.py` shows the full
+recipe):
+
+```python
+import torch
+from aiden.model import Aiden
+
+ckpt = torch.load("checkpoints/aiden-pbe.pt", map_location="cpu")
+model = Aiden(**ckpt["model_args"])
+model.load_state_dict(ckpt["ema_model"])   # EMA weights; ckpt["model"] for raw
+model.eval()
+```
+
+### Fine-tune on new data
+
+Pack your training densities with `aiden.prepare_data` (see below), then start
+from a pretrained checkpoint with `--resume-mode model_only` — this loads the
+model weights and resets the optimizer, scheduler, and step counter:
+
+```bash
+python train.py \
+    --data-root data/aiden-mp \
+    --elem-csv data/elem-des.csv \
+    --save-dir runs/aiden-finetune \
+    --lmax 4 --mmax 4 \
+    --initial-guess-steps 0 \
+    --resume checkpoints/aiden-pbe.pt \
+    --resume-mode model_only \
+    --encoder-lr 2e-5 --decoder-lr 1e-4 \
+    --max-steps 100000
+```
+
+Two ready-made transfer recipes from the paper (ECD HSE06) are recorded in
+`configs/`: `hse-l3-finetune.json` fine-tunes all weights from
+`checkpoints/aiden-pbe-l3.pt`, and `hse-l3-decoder.json` adds
+`--freeze-encoder` to optimize the decoder only. Omit `--resume` to train
+from scratch. To continue an interrupted run exactly where it stopped, use
+`--resume runs/<run>/last.pt` with the default `--resume-mode full`.
+
 ## Data preparation
 
 Training data are **not** included in this repository. The crystal benchmarks
 come from the [ECD dataset](https://openreview.net/forum?id=SBCMNc3Mq3)
-(PBE: 140,646 VASP PAW-PBE charge densities over 94 elements; HSE06: 7,147
-recalculated samples), and the molecular benchmark from the QM9 charge-density
-dataset of DeepDFT.
+(PBE: 140,646 VASP PAW-PBE charge densities; HSE06: 7,147 recalculated
+samples), and the molecular benchmark from the QM9 charge-density dataset of
+DeepDFT.
 
 ```bash
 # 1) download ECD PBE archives (resumable; ~500 GB total)
@@ -147,10 +158,9 @@ python -m aiden.prepare_qm9_data --input-root data/qm9-h5 --output-root data/aid
 
 The HSE06 runs use the recalculated ECD HSE06 charge densities, packed the
 same way into `data/aiden-hse`. `data/elem-des.csv` defines the
-133-dimensional element input (118-dim one-hot + 15 elemental descriptors,
-min-max normalized).
+133-dimensional element input (118-dim one-hot + 15 elemental descriptors).
 
-## Training
+## Training and evaluation
 
 ```bash
 python train.py \
@@ -161,34 +171,13 @@ python train.py \
     --max-steps 2000000
 ```
 
-Training follows two stages, both handled by `train.py`: the element-indexed
-one-center coefficients are optimized alone for 1,000 steps with the radial
-correction disabled, after which the complete model is optimized jointly with
-the grid-averaged MAE objective (5,000 uniformly sampled grid points per
-structure, batch size 12). The encoder and decoder use learning rates
-2e-4 / 1e-3 with Adam, cosine annealing, gradient-norm clipping at 0.5, and
-EMA weights (decay 0.995) for evaluation. The paper models were trained on a
-single NVIDIA A100-40GB.
-
-`configs/` records the exact configurations of the paper runs:
-
-| config | dataset | note |
-|---|---|---|
-| `pbe-l0.json` ... `pbe-l4.json` | ECD PBE | angular-order sweep, L = 0..4 |
-| `qm9-l0.json` ... `qm9-l4.json` | QM9 | angular-order sweep, L = 0..4 |
-| `hse-l3-scratch.json` | ECD HSE06 | trained from scratch |
-| `hse-l3-finetune.json` | ECD HSE06 | fine-tuned from the PBE L=3 checkpoint |
-| `hse-l3-decoder.json` | ECD HSE06 | decoder-only transfer from PBE |
-| `hse-zero-shot-*.json/csv` | ECD HSE06 | zero-shot evaluation of the PBE model |
-
-Principal model configuration (paper Appendix C.6): `L = M = 3`
-(`lmax = mmax = 3`; the released OOD checkpoint uses `L = M = 4`), 48 channels,
-ACE -> TECE interactions, correlation orders (2, 2), 4 attention heads,
-`N_B = 8` Bessel radial functions, `r_at = 4.0` A, 100 neighbors, environment
-rank `K = 8`, one-center rank `K_0 = 1`, `N_G = 8` Gaussian radial functions,
-`r_orb = 3.0` A. The L = 4 model has 4.46 M parameters.
-
-## Evaluation
+Training first optimizes the element one-center coefficients alone for 1,000
+steps, then the full model jointly with the grid-averaged MAE objective
+(5,000 sampled grid points per structure, batch size 12, Adam with cosine
+annealing and EMA evaluation weights; single A100-40GB in the paper).
+`configs/` records the exact configurations of every paper run
+(`pbe/qm9-l{0..4}`, `hse-l3-{scratch,finetune,decoder}`, and the HSE zero-shot
+evaluation).
 
 ```bash
 python evaluate.py \
@@ -201,64 +190,37 @@ python evaluate.py \
 Reports the density MAE and the per-structure NMAE
 `sum|rho_pred - rho_ref| / sum|rho_ref|` used in the paper.
 
+## Repository layout
+
+```
+aiden/                    model and data package (model, encoder, TECE operators,
+                          CHGCAR dataset/packing, encoder-cached fast inference)
+train.py                  training entry point (incl. fine-tuning via --resume)
+evaluate.py               held-out evaluation (MAE + per-structure NMAE)
+predict.py                single-structure prediction
+infer_full_grid.py        full-FFT-grid inference for one CHGCAR structure
+smoke_test.py             fail-fast data/model/equivariance smoke test
+configs/                  reference training configurations of the paper runs
+checkpoints/aiden-pbe.pt  released PBE L=4 checkpoint
+runs/                     training-run registry: configs, logs, metric tables,
+                          and plotting scripts behind the paper figures
+ablation/                 structural ablations (paper Table 3)
+benchmarks/               inference-speed and parameter-count comparisons
+examples/equivariance/    E(3)-equivariance check + density-decomposition cases
+ood/                      out-of-distribution benchmark (water, AlMg, a-Si)
+tbg/                      twisted-bilayer-graphene benchmark
+tests/                    unit tests for the downloader
+```
+
 ## Reproducing the paper experiments
 
-### Benchmarks (Table 1, Fig. 2, Fig. 8, Fig. 9)
-
-Train with the reference configs above; `runs/` archives every run's config
-and full training log plus the evaluation tables and plotting scripts.
-Headline validation NMAE of the paper: PBE 0.621 % / 0.454 % (L = 3 / L = 4),
-HSE 1.431 % / 1.301 % (scratch / fine-tune), QM9 0.163 %.
-
-### Structural ablations (Table 3)
-
-See `ablation/`. Eight L = 4 variants (interaction ordering, GIE, RRA,
-`rho_init`, fixed GTO basis) trained for 100k steps on a fixed
-2,000-structure PBE subset with a shared one-center initialization. Against
-the full model's 1.132 % validation NMAE: removing `rho_init` costs +35.7 %,
-a fixed GTO basis +7.4 %, removing RRA +2.6 %, removing GIE +1.3 %, and
-reordering TECE -> ACE +1.3 %.
-
-### Inference speed and parameter counts (Fig. 2a/2b)
-
-See `benchmarks/`. `benchmarks/inference-speed/` benchmarks the
-encoder-cached streaming decoder against the conventional per-block path
-(numerics verified to 1e-6 NMAE); `benchmarks/parameter-count/` compares
-learnable-parameter counts of AIDEN, ChargE3Net, and BOA at L = 0..4
-(AIDEN grows ~2.2x per angular order, reaching 4.46 M at L = 4).
-
-### E(3)-equivariance check (Fig. 7)
-
-See `examples/equivariance/`. The default case expands zinc-blende GaAs
-(mp-2534) on a 32 x 32 x 32 grid and compares the predicted density under
-translation, proper rotation, and inversion; L1 deviations stay at
-1e-6–1e-5 of the total cell charge (7.72e-6 / 7.27e-5 / 9.51e-7). The same
-directory also decomposes the predicted density of NaCl and H2O into
-`rho_init` and `rho_env`.
-
-### Out-of-distribution systems (Table 2, Fig. 3)
-
-See `ood/`. Zero-shot inference of the PBE-pretrained checkpoint on liquid
-water (192 atoms), Al54Mg54 (108 atoms), and amorphous silicon (64 atoms),
-evaluated against freshly converged PBE-SCF references: density NMAE,
-full-grid inference time, fixed-density energies and forces (VASP
-`ICHARG=11`), band/DOS metrics, and atom-rich cross-sections. VASP
-inputs/outputs and the full-grid prediction archives are included.
-
-### Twisted bilayer graphene (Fig. 4, Fig. 10, Tables 5-9)
-
-See `tbg/`. Twist angles 21.79 / 13.17 / 9.43 degrees (28 / 76 / 148 atoms).
-The directory contains the eigenvalue, energy, force, timing, and DOS tables
-behind the NSCF band-structure and charge-conservation comparison against
-ChargE3Net and DFT, plus the plotting scripts.
-
-## Released checkpoint
-
-`checkpoints/aiden-pbe.pt` is the PBE-pretrained L = 4 model
-(4.46 M parameters, validation NMAE 0.454 %) used for all zero-shot OOD and
-TBG evaluations. It stores EMA weights under `ema_model`, which the inference
-entry points select by default. Checkpoints of the remaining paper runs
-(PBE/QM9 L = 0..4, HSE variants) are attached to the repository releases.
+Each experiment section of the paper maps to one directory: train with the
+`configs/` references (benchmarks, Table 1 and Figs. 2/8/9 via `runs/`),
+`ablation/` (Table 3), `benchmarks/` (inference speed and parameter counts),
+`examples/equivariance/` (equivariance check, Fig. 7), `ood/` (zero-shot OOD,
+Table 2 and Fig. 3), and `tbg/` (twisted bilayer graphene, Figs. 4/10 and
+Tables 5-9). Every directory has its own README with the protocol and the
+headline numbers.
 
 ## Citation
 
