@@ -1,0 +1,58 @@
+{
+  "system": "NaCl",
+  "checkpoint": "aiden-pbe.pt",
+  "weight_state": "ema_model",
+  "device": "cpu",
+  "grid_shape": [
+    32,
+    32,
+    32
+  ],
+  "inference_seconds": 0.9752347079993342,
+  "component_definition": {
+    "rho_init": "model decoder pred_initial (element-only initial-density head)",
+    "rho_env": "model decoder pred_learned (environment-dependent head)",
+    "rho_total": "rho_init + rho_env"
+  },
+  "rho_init": {
+    "min_e_per_angstrom3": 0.01242734119296074,
+    "max_e_per_angstrom3": 11.845508575439453,
+    "mean_e_per_angstrom3": 0.30496693984358103,
+    "integrated_electrons": 53.217128157864146
+  },
+  "rho_env": {
+    "min_e_per_angstrom3": -0.22699131071567535,
+    "max_e_per_angstrom3": 0.10795240849256516,
+    "mean_e_per_angstrom3": 0.015970657434354774,
+    "integrated_electrons": 2.7869005207099757
+  },
+  "rho_total": {
+    "min_e_per_angstrom3": -0.019206106662750244,
+    "max_e_per_angstrom3": 11.836784362792969,
+    "mean_e_per_angstrom3": 0.3209375971864574,
+    "integrated_electrons": 56.00402866261103
+  },
+  "max_abs_total_reconstruction_error": 0.0,
+  "figure_order": [
+    "structure",
+    "structure + rho_init",
+    "structure + rho_env",
+    "structure + rho_total"
+  ],
+  "figure_has_text_annotations": false,
+  "render_dpi": 1200,
+  "density_surfaces_rasterized_in_pdf": false,
+  "rho_env_surface_colors": {
+    "positive": "blue",
+    "negative": "red"
+  },
+  "figsize_inches": [
+    2.5,
+    2.5
+  ],
+  "outputs": {
+    "png": "results-nacl-components/nacl_structure_rho_components_2x2.png",
+    "pdf": "results-nacl-components/nacl_structure_rho_components_2x2.pdf",
+    "density_npz": "results-nacl-components/nacl_density_components.npz"
+  }
+}

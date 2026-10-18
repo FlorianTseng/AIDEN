@@ -1,0 +1,10 @@
+{
+  "checkpoint": "ablation/runs_l4_2k_100k/fixed_gto/best_nmae.pt",
+  "global_nmae": 0.01209662262968647,
+  "mae": 0.006116400618124008,
+  "nmae": 0.013326293581281788,
+  "num_points": 10000000,
+  "num_structures": 2000,
+  "split": "test",
+  "weights": "ema_model"
+}

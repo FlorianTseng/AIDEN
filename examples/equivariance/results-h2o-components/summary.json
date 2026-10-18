@@ -1,0 +1,74 @@
+{
+  "system": "H2O",
+  "checkpoint": "aiden-pbe.pt",
+  "weight_state": "ema_model",
+  "device": "cpu",
+  "grid_shape": [
+    96,
+    96,
+    96
+  ],
+  "inference_seconds": 1.9606214580053347,
+  "component_definition": {
+    "rho_init": "model decoder pred_initial (element-only initial-density head)",
+    "rho_env": "model decoder pred_learned (environment-dependent head)",
+    "rho_total": "rho_init + rho_env"
+  },
+  "rho_init": {
+    "min_e_per_angstrom3": 0.0,
+    "max_e_per_angstrom3": 8.131719589233398,
+    "mean_e_per_angstrom3": 0.007988359625467843,
+    "integrated_electrons": 7.988359625467848
+  },
+  "rho_env": {
+    "min_e_per_angstrom3": -0.5383309721946716,
+    "max_e_per_angstrom3": 0.7098587155342102,
+    "mean_e_per_angstrom3": 0.00013781276010215533,
+    "integrated_electrons": 0.13781276010215543
+  },
+  "rho_total": {
+    "min_e_per_angstrom3": 0.0,
+    "max_e_per_angstrom3": 8.234579086303711,
+    "mean_e_per_angstrom3": 0.008126172386761638,
+    "integrated_electrons": 8.126172386761644
+  },
+  "max_abs_total_reconstruction_error": 0.0,
+  "panel_order": [
+    "structure",
+    "env",
+    "init",
+    "sum"
+  ],
+  "figure_has_annotations": false,
+  "unit_cell_box_drawn": false,
+  "render_dpi": 1200,
+  "density_surfaces_rasterized_in_pdf": false,
+  "rho_env_surface_colors": {
+    "positive": "blue",
+    "negative": "red"
+  },
+  "figsize_inches": [
+    3.0,
+    3.0
+  ],
+  "view_margin_angstrom": 2.6,
+  "figures": {
+    "structure": {
+      "png": "results-h2o-components/structure.png",
+      "pdf": "results-h2o-components/structure.pdf"
+    },
+    "env": {
+      "png": "results-h2o-components/env.png",
+      "pdf": "results-h2o-components/env.pdf"
+    },
+    "init": {
+      "png": "results-h2o-components/init.png",
+      "pdf": "results-h2o-components/init.pdf"
+    },
+    "sum": {
+      "png": "results-h2o-components/sum.png",
+      "pdf": "results-h2o-components/sum.pdf"
+    }
+  },
+  "density_npz": "results-h2o-components/h2o_density_components.npz"
+}

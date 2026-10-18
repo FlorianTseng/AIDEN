@@ -1,0 +1,188 @@
+{
+  "status": "ok",
+  "system": "GaAs_mp-2534_symmetrized",
+  "classification": "E(3)",
+  "classification_detail": "translation + proper rotations + inversion/reflections",
+  "definitions": {
+    "E(3)": "translations + O(3)",
+    "SE(3)": "translations + SO(3)",
+    "O(3)": "proper rotations + inversion/reflections, without asserted translations",
+    "SO(3)": "proper rotations only, without asserted translations or reflections"
+  },
+  "equivariance_tolerance": 0.0001,
+  "input_cif": "GaAs_mp-2534_symmetrized.cif",
+  "checkpoint": "aiden-pbe.pt",
+  "checkpoint_weight_state": "ema_model",
+  "model_name": "Aiden",
+  "device": "cpu",
+  "torch_version": "2.0.0+cu118",
+  "atoms": 8,
+  "species_counts": {
+    "Ga": 4,
+    "As": 4
+  },
+  "grid_shape": [
+    32,
+    32,
+    32
+  ],
+  "grid_points": 32768,
+  "query_block_size": 2048,
+  "translation_grid_steps": [
+    3,
+    -5,
+    7
+  ],
+  "translation_fractional": [
+    0.09375,
+    -0.15625,
+    0.21875
+  ],
+  "proper_rotation_axis": [
+    1.0,
+    2.0,
+    -1.0
+  ],
+  "proper_rotation_angle_degrees": 37.0,
+  "proper_rotation_matrix": [
+    [
+      0.832196258372744,
+      0.3128114510281963,
+      0.45781916042913656
+    ],
+    [
+      -0.17856845772639146,
+      0.9328785033490976,
+      -0.3128114510281963
+    ],
+    [
+      -0.524940657080039,
+      0.17856845772639146,
+      0.832196258372744
+    ]
+  ],
+  "comparisons": {
+    "translation": {
+      "metrics": {
+        "mae_e_per_angstrom3": 2.9277094881763333e-06,
+        "rmse_e_per_angstrom3": 1.684325545143908e-05,
+        "max_abs_e_per_angstrom3": 0.0005645751953125,
+        "normalized_l1": 7.72222560611325e-06,
+        "max_abs_over_reference_peak": 3.427457174154194e-05,
+        "pearson_correlation": 0.9999999998920915
+      },
+      "passes": true,
+      "expected_mapping": "rho_variant[i,j,k] = rho_original[(i-(3)) mod 32, (j-(-5)) mod 32, (k-(7)) mod 32]",
+      "transform_determinant": 1.0
+    },
+    "proper_rotation": {
+      "metrics": {
+        "mae_e_per_angstrom3": 2.7575846530680792e-05,
+        "rmse_e_per_angstrom3": 4.134134404469745e-05,
+        "max_abs_e_per_angstrom3": 0.0008077621459960938,
+        "normalized_l1": 7.273498584796977e-05,
+        "max_abs_over_reference_peak": 4.903811193426693e-05,
+        "pearson_correlation": 0.9999999993474319
+      },
+      "passes": true,
+      "expected_mapping": "same fractional-grid index after transforming the full Cartesian cell",
+      "transform_determinant": 1.0000000000000002
+    },
+    "inversion": {
+      "metrics": {
+        "mae_e_per_angstrom3": 3.6065017638975405e-07,
+        "rmse_e_per_angstrom3": 4.881448174151423e-07,
+        "max_abs_e_per_angstrom3": 1.5497207641601562e-06,
+        "normalized_l1": 9.512631079735325e-07,
+        "max_abs_over_reference_peak": 9.408138358109063e-08,
+        "pearson_correlation": 0.9999999999999085
+      },
+      "passes": true,
+      "expected_mapping": "same fractional-grid index after transforming the full Cartesian cell",
+      "transform_determinant": -1.0
+    }
+  },
+  "integrated_density_electrons": {
+    "original": 71.98188294483822,
+    "translation": 71.98192712072527,
+    "proper_rotation": 71.98194070316185,
+    "inversion": 71.98188288243576
+  },
+  "timing_seconds": {
+    "model_load": 0.26044788863509893,
+    "per_variant_structure_graph_encode_decode": {
+      "original": 12.88653430622071,
+      "translation": 13.653641300275922,
+      "proper_rotation": 13.365483392961323,
+      "inversion": 10.173732380382717
+    },
+    "total": 54.80064226128161
+  },
+  "outputs": {
+    "structure_dir": "results-gaas/structures",
+    "density_dir": "results-gaas/densities",
+    "comparison_plot": "results-gaas/equivariance_comparison.png",
+    "ase_isosurface_1x4": {
+      "png": "results-gaas/gaas_density_equivariance_1x4.png",
+      "pdf": "results-gaas/gaas_density_equivariance_1x4.pdf",
+      "world_axes": false,
+      "isosurface_levels_e_per_angstrom3": [
+        0.05849100807268202,
+        0.23960962325246177,
+        0.9815657730474485,
+        4.021004472775641
+      ]
+    },
+    "ase_isosurface_1x4_world_axes": {
+      "png": "results-gaas/gaas_density_equivariance_1x4_world_axes.png",
+      "pdf": "results-gaas/gaas_density_equivariance_1x4_world_axes.pdf",
+      "world_axes": true,
+      "isosurface_levels_e_per_angstrom3": [
+        0.058491008,
+        0.23960962,
+        0.98156577,
+        4.0210045
+      ]
+    },
+    "ase_eq_gaas": {
+      "png": "results-gaas/eq-gaas.png",
+      "pdf": "results-gaas/eq-gaas.pdf",
+      "world_axes": false,
+      "rho_levels_e_per_angstrom3": [
+        0.05849085376790248,
+        0.2396091561040149,
+        0.9815645351441936,
+        4.021002170028062
+      ],
+      "error_levels_percent": {
+        "translation": [
+          9.769560706246757e-05,
+          0.0006164176079951493,
+          0.003889332170314524,
+          0.024540026979830376
+        ],
+        "proper_rotation": [
+          0.0001659127163670391,
+          0.0010468384693444255,
+          0.006605104207172693,
+          0.04167539010572633
+        ],
+        "inversion": [
+          1.75628609739525e-05,
+          5.083896795923798e-05,
+          0.00014716284932128385,
+          0.0004259902411418563
+        ]
+      },
+      "grid_rolls_undone": {
+        "translation": [
+          13,
+          -11,
+          -7
+        ]
+      },
+      "min_reference_abs_density": 0.014278168790064964
+    }
+  },
+  "caveat": "Numerical evidence for this checkpoint on GaAs_mp-2534_symmetrized; not a formal architecture-level proof. Generated CIFs use custom _eqproof lattice-vector tags because standard CIF metrics do not preserve global Cartesian orientation/handedness."
+}

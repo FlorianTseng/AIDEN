@@ -1,0 +1,58 @@
+{
+  "task": "ref_water",
+  "task_type": "reference",
+  "sample": "water",
+  "dataset": "water",
+  "atoms": 192,
+  "species": [
+    "O",
+    "H"
+  ],
+  "counts": [
+    64,
+    128
+  ],
+  "grid": [
+    216,
+    216,
+    216
+  ],
+  "functional": "PBE",
+  "encut_ev": 520,
+  "scf_kmesh": [
+    2,
+    2,
+    2
+  ],
+  "dos_kmesh": [
+    4,
+    4,
+    4
+  ],
+  "band_path": "G-X-M-G-R-X-M-R in the common cubic-cell reciprocal basis",
+  "nbands": 288,
+  "potentials": [
+    {
+      "element": "O",
+      "potential": "O",
+      "title": "PAW_PBE O 08Apr2002",
+      "lexch": "PE",
+      "zval": 6.0,
+      "enmax_ev": 400.0,
+      "sha256": "818f92134a0a090dccd8ba1447fa70422a3b330e708bb4f08108d8ae51209ddf",
+      "source": "potcars/O/POTCAR"
+    },
+    {
+      "element": "H",
+      "potential": "H",
+      "title": "PAW_PBE H 15Jun2001",
+      "lexch": "PE",
+      "zval": 1.0,
+      "enmax_ev": 250.0,
+      "sha256": "030f79b5d3ab3cf0e668861823c8fb652ff669f3e15e46930bd03bfd63a607b6",
+      "source": "potcars/H/POTCAR"
+    }
+  ],
+  "reference_policy": "Fresh matched PBE-SCF is the sole density, energy, force, band, and DOS reference; supplied files provide structure and grid only.",
+  "structure_source": "28-h2o/CHGCAR"
+}

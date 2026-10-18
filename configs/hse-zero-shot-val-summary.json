@@ -1,0 +1,10 @@
+{
+  "checkpoint": "hse-tl/weights/aiden-l3-best_nmae.pt",
+  "global_nmae": 0.0810363192258571,
+  "mae": 0.03599868751077652,
+  "nmae": 0.08669107992108911,
+  "num_points": 2500000,
+  "num_structures": 500,
+  "split": "val",
+  "weights": "ema_model"
+}

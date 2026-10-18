@@ -1,0 +1,43 @@
+{
+  "samples": 3,
+  "timing_seconds": {
+    "aiden_full_grid": {
+      "n": 3,
+      "mean": 27.87776237633352,
+      "median": 28.933102211999994
+    },
+    "aiden_end_to_end": {
+      "n": 3,
+      "mean": 33.70656993866669,
+      "median": 34.96845933399982
+    },
+    "charge3net_official_full_grid": {
+      "n": 3,
+      "mean": 359.00405136744183,
+      "median": 314.0579915046692
+    },
+    "charge3net_end_to_end_without_environment": {
+      "n": 3,
+      "mean": 447.5136,
+      "median": 397.796
+    },
+    "dft_scf": {
+      "n": 3,
+      "mean": 12458.0,
+      "median": 7491.0
+    }
+  },
+  "nmae": {
+    "aiden_raw": {
+      "n": 3,
+      "mean": 0.0029107775893655145,
+      "median": 0.002906783460043641
+    },
+    "charge3net_raw": {
+      "n": 3,
+      "mean": 0.0031462094271557744,
+      "median": 0.0031447506362714804
+    }
+  },
+  "failures": []
+}

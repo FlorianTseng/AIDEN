@@ -1,0 +1,16 @@
+{
+  "sample_rank": 3,
+  "source": "/home/input_lbg-45644-23209214/inputs/tbg_m03_9p43deg.chgcar",
+  "name": "tbg_m03_9p43deg.chgcar",
+  "formula": "C148",
+  "atoms": 148,
+  "grid_x": 224,
+  "grid_y": 224,
+  "grid_z": 300,
+  "points": 15052800,
+  "mae": 0.0005336545808514769,
+  "nmae": 0.003495997151297889,
+  "nmae_percent": 0.3495997151297889,
+  "absolute_error_sum": 8032.995674641112,
+  "target_abs_sum": 2297769.513816355
+}

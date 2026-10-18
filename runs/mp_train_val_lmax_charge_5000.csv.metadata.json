@@ -1,0 +1,62 @@
+{
+  "charge_formula": "cell_volume_ang3 * density_sum_5000 / 5000",
+  "charge_unit": "e",
+  "csv": "mp_train_val_lmax_charge_5000.csv",
+  "density_unit": "e/Ang^3",
+  "description": "Per-structure true/predicted total charge estimated from 5,000 stored MP probes.",
+  "models": {
+    "l0": {
+      "best_val_nmae": 0.01269456185400486,
+      "checkpoint": "runs/aiden-pbe-l0/best_nmae.pt",
+      "global_step": 1865000,
+      "lmax": 0,
+      "weight_state": "ema_model"
+    },
+    "l1": {
+      "best_val_nmae": 0.010191590859903954,
+      "checkpoint": "runs/aiden-pbe-l1/best_nmae.pt",
+      "global_step": 1958000,
+      "lmax": 1,
+      "weight_state": "ema_model"
+    },
+    "l2": {
+      "best_val_nmae": 0.007663509750273079,
+      "checkpoint": "runs/aiden-pbe-l2/best_nmae.pt",
+      "global_step": 1970000,
+      "lmax": 2,
+      "weight_state": "ema_model"
+    },
+    "l3": {
+      "best_val_nmae": 0.006214377819560468,
+      "checkpoint": "runs/aiden-pbe-l3/best_nmae.pt",
+      "global_step": 1903000,
+      "lmax": 3,
+      "weight_state": "ema_model"
+    },
+    "l4": {
+      "best_val_nmae": 0.004542438909993507,
+      "checkpoint": "runs/aiden-pbe-l4/best_nmae.pt",
+      "global_step": 1947000,
+      "lmax": 4,
+      "weight_state": "ema_model"
+    }
+  },
+  "point_counts": {
+    "train": 588785000,
+    "val": 73600000
+  },
+  "row_counts": {
+    "train": 117757,
+    "val": 14720
+  },
+  "split_ratio": [
+    0.8,
+    0.1,
+    0.1
+  ],
+  "split_seed": 42,
+  "splits": [
+    "train",
+    "val"
+  ]
+}

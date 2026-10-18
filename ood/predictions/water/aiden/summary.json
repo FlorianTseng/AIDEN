@@ -1,0 +1,58 @@
+{
+  "archive_contains_target": false,
+  "checkpoint": "/home/input_lbg-45644-23334528/models/aiden-pbe.pt",
+  "counts": [
+    64,
+    128
+  ],
+  "density_units": "electron/angstrom^3",
+  "device": "cuda",
+  "fast": {
+    "integrated_electrons": 513.2521028126548
+  },
+  "fast_vs_original": {
+    "max_abs_difference": 0.0004277229309082031,
+    "mean_abs_difference": 3.8616135498159565e-06
+  },
+  "grid_shape": [
+    216,
+    216,
+    216
+  ],
+  "input": "/home/input_lbg-45644-23334528/inputs/water.CHGCAR",
+  "keys_remapped": {
+    "density_pred_fast": "density_pred",
+    "mae_fast": "mae",
+    "nmae_fast": "nmae"
+  },
+  "metric_reference": "deferred_to_matched_pbe_scf",
+  "note": "density_pred is the encoder-cached full-grid prediction",
+  "num_atoms": 192,
+  "num_points": 10077696,
+  "original": {
+    "integrated_electrons": 513.2520843689592
+  },
+  "prediction_archive": "/home/input_lbg-45644-23334528/results/water/aiden/full_grid_prediction.npz",
+  "query_block_size": 65536,
+  "source_name": "water.CHGCAR",
+  "species": [
+    "O",
+    "H"
+  ],
+  "strict_graph_order": true,
+  "system": "water",
+  "target_integrated_electrons": null,
+  "timing_seconds": {
+    "encode_structure": 0.25959623400558485,
+    "infer_fast_decode_full_grid": 23.439307991000533,
+    "infer_fast_total": 23.698904225006117,
+    "infer_original_full_grid": 70.65917081000225,
+    "parse_chgcar": 10.890985063997505,
+    "save_archive": 6.559207145997789,
+    "speedup_original_over_fast": 2.9815374643121926,
+    "total": 157.59669590799604,
+    "warmup_points_excluded": 64
+  },
+  "volume_angstrom3": 1842.74908087111,
+  "weight_state": "ema_model"
+}

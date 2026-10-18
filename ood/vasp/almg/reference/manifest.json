@@ -1,0 +1,58 @@
+{
+  "task": "ref_almg",
+  "task_type": "reference",
+  "sample": "almg",
+  "dataset": "almg",
+  "atoms": 108,
+  "species": [
+    "Al",
+    "Mg"
+  ],
+  "counts": [
+    54,
+    54
+  ],
+  "grid": [
+    216,
+    216,
+    216
+  ],
+  "functional": "PBE",
+  "encut_ev": 520,
+  "scf_kmesh": [
+    2,
+    2,
+    2
+  ],
+  "dos_kmesh": [
+    4,
+    4,
+    4
+  ],
+  "band_path": "G-X-M-G-R-X-M-R in the common cubic-cell reciprocal basis",
+  "nbands": 329,
+  "potentials": [
+    {
+      "element": "Al",
+      "potential": "Al",
+      "title": "PAW_PBE Al 04Jan2001",
+      "lexch": "PE",
+      "zval": 3.0,
+      "enmax_ev": 240.3,
+      "sha256": "17880443556af62b473fe41b62a467bd001ad55d2cabe504a3f22e34d4e9db96",
+      "source": "/personal/scf-test/ood-test/ood-benchmark-v1/potcars/Al/POTCAR"
+    },
+    {
+      "element": "Mg",
+      "potential": "Mg_pv",
+      "title": "PAW_PBE Mg_pv 13Apr2007",
+      "lexch": "PE",
+      "zval": 8.0,
+      "enmax_ev": 403.929,
+      "sha256": "f474ac0dd33840b9ae76c01d57fea79fdf77cdfbb07d5ade72c65f83c709b62b",
+      "source": "/personal/scf-test/ood-test/ood-benchmark-v1/potcars/Mg_pv/POTCAR"
+    }
+  ],
+  "reference_policy": "Fresh matched PBE-SCF is the sole density, energy, force, band, and DOS reference; supplied files provide structure and grid only.",
+  "structure_source": "almg-19.CHGCAR"
+}

@@ -1,0 +1,50 @@
+{
+  "selection_policy": "one atom-rich grid plane per lattice direction; atomic positions only",
+  "atom_band_voxels": 1.5,
+  "selections": [
+    {
+      "axis": "x",
+      "axis_index": 0,
+      "grid_index": 191,
+      "plane_fraction": 0.8842592592592593,
+      "spacing_angstrom": 0.05675903240740741,
+      "atom_tolerance_angstrom": 0.08513854861111111,
+      "sample": "water",
+      "atoms_near_plane": 9,
+      "species_near_plane": {
+        "H": 7,
+        "O": 2
+      },
+      "closest_center_distance_angstrom": 0.020477296675815847
+    },
+    {
+      "axis": "x",
+      "axis_index": 0,
+      "grid_index": 36,
+      "plane_fraction": 0.16666666666666666,
+      "spacing_angstrom": 0.056096245370370376,
+      "atom_tolerance_angstrom": 0.08414436805555556,
+      "sample": "almg",
+      "atoms_near_plane": 13,
+      "species_near_plane": {
+        "Al": 6,
+        "Mg": 7
+      },
+      "closest_center_distance_angstrom": 0.0041762532753332506
+    },
+    {
+      "axis": "x",
+      "axis_index": 0,
+      "grid_index": 97,
+      "plane_fraction": 0.5773809523809523,
+      "spacing_angstrom": 0.06480598214285714,
+      "atom_tolerance_angstrom": 0.0972089732142857,
+      "sample": "asi_011",
+      "atoms_near_plane": 5,
+      "species_near_plane": {
+        "Si": 5
+      },
+      "closest_center_distance_angstrom": 0.0320084522521425
+    }
+  ]
+}

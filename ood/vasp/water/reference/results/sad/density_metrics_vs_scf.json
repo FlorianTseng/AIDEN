@@ -1,0 +1,16 @@
+{
+  "status": "ok",
+  "reference": "/home/input_lbg-45644-23334531/results/scf/CHGCAR",
+  "candidate": "/home/input_lbg-45644-23334531/results/sad/CHGCAR",
+  "grid": [
+    216,
+    216,
+    216
+  ],
+  "grid_points": 10077696,
+  "nmae": 0.12352684776491762,
+  "mae_e_per_angstrom3": 0.034321409652044235,
+  "max_abs_error_e_per_angstrom3": 1.1849793541439486,
+  "reference_integrated_electrons": 512.0000002822663,
+  "candidate_integrated_electrons": 512.0000000000911
+}

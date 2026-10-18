@@ -1,0 +1,10 @@
+sample,method,checkpoint,density_nmae_percent,density_time_seconds,density_accuracy_source,density_time_source,downstream_density_source,energy_error_signed_mev_per_atom,energy_error_abs_mev_per_atom,force_component_mae_ev_per_ang,force_vector_max_ev_per_ang,band_raw_mae_mev,band_aligned_mae_mev,band_aligned_max_abs_mev,dos_raw_nmae_percent,dos_fermi_aligned_nmae_percent,density_time_scope
+water,aiden_merged,aiden-pbe.pt,1.876356,23.698904,original,fast,original,3.443611,3.443611,0.114674,0.920639,40.371168,40.619178,251.753594,31.063351,38.021362,GPU inference; best Aiden accuracy and best Aiden time are reported separately
+water,charge3net,charge3net_mp.pt,1.787985,1286.430150,charge3net,charge3net,charge3net,-6.442721,6.442721,0.125378,1.163694,58.281636,33.944598,171.301817,32.703106,31.967152,GPU inference
+water,sad,VASP_SAD,12.352685,1433.000000,sad,sad,sad,-485.445308,485.445308,1.117442,5.039109,,,,,,complete ICHARG=12 VASP wall time
+almg,aiden_merged,aiden-pbe.pt,4.300356,13.395582,original,fast,original,-262.808809,262.808809,0.103979,0.483415,29.101094,20.295464,179.384292,6.075926,5.263948,GPU inference; best Aiden accuracy and best Aiden time are reported separately
+almg,charge3net,charge3net_mp.pt,4.327420,936.429436,charge3net,charge3net,charge3net,-276.070363,276.070363,0.035796,0.178599,11.345003,7.290150,51.324664,2.790652,2.283712,GPU inference
+almg,sad,VASP_SAD,4.805721,1344.000000,sad,sad,sad,-49.643379,49.643379,0.157755,0.760691,,,,,,complete ICHARG=12 VASP wall time
+asi_011,aiden_merged,aiden-pbe.pt,1.321527,4.341478,fast,fast,original,-3.212983,3.212983,0.040869,0.201793,7.310702,6.984340,52.905687,2.033075,2.024652,GPU inference; best Aiden density accuracy/time use fast and downstream properties use original
+asi_011,charge3net,charge3net_mp.pt,1.639097,328.873032,charge3net,charge3net,charge3net,-4.773982,4.773982,0.040896,0.161305,13.656302,8.032042,48.561227,2.883842,2.440298,GPU inference
+asi_011,sad,VASP_SAD,9.999538,307.000000,sad,sad,sad,-82.106507,82.106507,0.127783,0.676815,,,,,,complete ICHARG=12 VASP wall time

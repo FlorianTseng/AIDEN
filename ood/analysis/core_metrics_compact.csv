@@ -1,0 +1,10 @@
+sample,method,density_nmae_percent,density_time_seconds,energy_abs_error_mev_per_atom,force_component_mae_ev_per_ang,density_accuracy_source,density_time_source,downstream_density_source,density_time_scope
+water,aiden_merged,1.876356,23.698904,3.443611,0.114674,original,fast,original,GPU inference
+water,charge3net,1.787985,1286.430150,6.442721,0.125378,charge3net,charge3net,charge3net,GPU inference
+water,sad,12.352685,1433.000000,485.445308,1.117442,sad,sad,sad,complete ICHARG=12 VASP wall time
+almg,aiden_merged,4.300356,13.395582,262.808809,0.103979,original,fast,original,GPU inference
+almg,charge3net,4.327420,936.429436,276.070363,0.035796,charge3net,charge3net,charge3net,GPU inference
+almg,sad,4.805721,1344.000000,49.643379,0.157755,sad,sad,sad,complete ICHARG=12 VASP wall time
+asi_011,aiden_merged,1.321527,4.341478,3.212983,0.040869,fast,fast,original,GPU inference
+asi_011,charge3net,1.639097,328.873032,4.773982,0.040896,charge3net,charge3net,charge3net,GPU inference
+asi_011,sad,9.999538,307.000000,82.106507,0.127783,sad,sad,sad,complete ICHARG=12 VASP wall time

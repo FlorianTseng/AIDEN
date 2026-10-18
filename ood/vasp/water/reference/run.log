@@ -1,0 +1,35 @@
+ 
+:: initializing oneAPI environment ...
+   run_reference.sh: BASH_VERSION = 5.0.17(1)-release
+   args: Using "$@" for setvars.sh arguments: 
+:: compiler -- latest
+:: debugger -- latest
+:: dev-utilities -- latest
+:: mkl -- latest
+:: mpi -- latest
+:: tbb -- latest
+:: vtune -- latest
+:: oneAPI environment initialized ::
+ 
+{
+  "status": "ok",
+  "reference": "/home/input_lbg-45644-23334531/results/scf/CHGCAR",
+  "candidate": "/home/input_lbg-45644-23334531/results/sad/CHGCAR",
+  "grid": [
+    216,
+    216,
+    216
+  ],
+  "grid_points": 10077696,
+  "nmae": 0.12352684776491762,
+  "mae_e_per_angstrom3": 0.034321409652044235,
+  "max_abs_error_e_per_angstrom3": 1.1849793541439486,
+  "reference_integrated_electrons": 512.0000002822663,
+  "candidate_integrated_electrons": 512.0000000000911
+}
+stage	exit_code	wall_seconds	start_utc	end_utc
+scf	0	3568	2026-09-05T19:10:17Z	2026-09-05T20:09:45Z
+sad	0	1433	2026-09-05T20:09:46Z	2026-09-05T20:33:39Z
+sad_energy_force	0	1512	2026-09-05T20:33:51Z	2026-09-05T20:59:03Z
+bands	0	13467	2026-09-05T20:59:03Z	2026-09-06T00:43:30Z
+dos	0	10898	2026-09-06T00:43:31Z	2026-09-06T03:45:09Z

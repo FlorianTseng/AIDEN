@@ -1,0 +1,26 @@
+{
+  "task": "prop_charge3net_almg",
+  "task_type": "properties",
+  "sample": "almg",
+  "dataset": "almg",
+  "method": "charge3net",
+  "input_ready": true,
+  "dependencies": [
+    "gpu_almg",
+    "ref_almg"
+  ],
+  "paw_policy": "model smooth grid plus one-center PAW tail from the matched PBE SCF CHGCAR",
+  "calculation": "PBE ICHARG=11 frozen-density energy/Harris-corrected approximate forces, common-path bands, and common-mesh DOS",
+  "model_density_source": "/personal/scf-test/ood-test/ood-benchmark-v1/downloads/gpu/gpu_almg/23334529/extracted/results/almg/charge3net/full_grid_prediction.npy",
+  "density_reference": "fresh matched PBE-SCF; evaluated by analyze.py",
+  "density": {
+    "grid": [
+      216,
+      216,
+      216
+    ],
+    "grid_points": 10077696,
+    "volume_angstrom3": 1778.9454691022368,
+    "integrated_electrons": 593.1212054516996
+  }
+}

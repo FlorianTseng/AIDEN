@@ -1,0 +1,4 @@
+stage	exit_code	wall_seconds	start_utc	end_utc
+energy_force	0	1353	2026-09-06T13:20:33Z	2026-09-06T13:43:06Z
+bands	0	13553	2026-09-06T13:43:07Z	2026-09-06T17:29:00Z
+dos	0	11709	2026-09-06T17:29:01Z	2026-09-06T20:44:10Z

@@ -1,0 +1,46 @@
+{
+  "task": "ref_asi_011",
+  "task_type": "reference",
+  "sample": "asi_011",
+  "dataset": "asi",
+  "atoms": 64,
+  "species": [
+    "Si"
+  ],
+  "counts": [
+    64
+  ],
+  "grid": [
+    168,
+    168,
+    168
+  ],
+  "functional": "PBE",
+  "encut_ev": 520,
+  "scf_kmesh": [
+    2,
+    2,
+    2
+  ],
+  "dos_kmesh": [
+    4,
+    4,
+    4
+  ],
+  "band_path": "G-X-M-G-R-X-M-R in the common cubic-cell reciprocal basis",
+  "nbands": 160,
+  "potentials": [
+    {
+      "element": "Si",
+      "potential": "Si",
+      "title": "PAW_PBE Si 05Jan2001",
+      "lexch": "PE",
+      "zval": 4.0,
+      "enmax_ev": 245.345,
+      "sha256": "79d9987ad8750f624c4d6acb2a16d13abf6a777132adc04dc6c8399be72b42bb",
+      "source": "potcars/Si/POTCAR"
+    }
+  ],
+  "reference_policy": "Fresh matched PBE-SCF is the sole density, energy, force, band, and DOS reference; supplied files provide structure and grid only.",
+  "structure_source": "a-si.zip/11.h5"
+}

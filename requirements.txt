@@ -1,0 +1,10 @@
+numpy>=1.24
+pandas>=1.5
+torch>=2.0
+h5py>=3.8
+matplotlib>=3.6
+ase>=3.23
+# optional: accelerated periodic neighbor search
+# torch-cluster
+# tests
+# pytest

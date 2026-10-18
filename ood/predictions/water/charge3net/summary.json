@@ -1,0 +1,55 @@
+{
+  "cell_A": [
+    [
+      12.259951,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      12.259951,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      12.259951
+    ]
+  ],
+  "checkpoint": "/home/input_lbg-45644-23334528/models/charge3net_mp.pt",
+  "checkpoint_epoch": 245,
+  "checkpoint_step": 407868,
+  "density_units": "electrons/A^3",
+  "device": "cuda",
+  "formula": "H128O64",
+  "grid_flattening": "NumPy C order: z index varies fastest",
+  "grid_shape": [
+    216,
+    216,
+    216
+  ],
+  "inference_seconds": 1286.4301496769986,
+  "input": "/home/input_lbg-45644-23334528/inputs/water.CHGCAR",
+  "method": "Charge3Net E3 full-grid streaming inference",
+  "metric_reference": "deferred_to_matched_pbe_scf",
+  "model_config": {
+    "basis": "gaussian",
+    "cutoff": 4.0,
+    "lmax": 4,
+    "mul": 500,
+    "num_basis": 20,
+    "num_interactions": 3,
+    "num_neighbors": 20
+  },
+  "num_atom_edges": 5238,
+  "num_atoms": 192,
+  "num_grid_points": 10077696,
+  "prediction_file": "/home/input_lbg-45644-23334528/results/water/charge3net/full_grid_prediction.npy",
+  "prediction_integrated_electrons": 513.0110487823563,
+  "probe_batch_size": 2500,
+  "system": "water",
+  "total_seconds": 1311.3054332959946,
+  "volume_A3": 1842.74908087111,
+  "voxel_volume_A3": 0.00018285420406322138,
+  "warmup_points_excluded": 2500
+}

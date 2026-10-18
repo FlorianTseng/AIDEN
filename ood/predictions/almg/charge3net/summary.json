@@ -1,0 +1,55 @@
+{
+  "cell_A": [
+    [
+      12.116789,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      12.116789,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      12.116789
+    ]
+  ],
+  "checkpoint": "/home/input_lbg-45644-23334529/models/charge3net_mp.pt",
+  "checkpoint_epoch": 245,
+  "checkpoint_step": 407868,
+  "density_units": "electrons/A^3",
+  "device": "cuda",
+  "formula": "Al54Mg54",
+  "grid_flattening": "NumPy C order: z index varies fastest",
+  "grid_shape": [
+    216,
+    216,
+    216
+  ],
+  "inference_seconds": 936.4294362220026,
+  "input": "/home/input_lbg-45644-23334529/inputs/almg.CHGCAR",
+  "method": "Charge3Net E3 full-grid streaming inference",
+  "metric_reference": "deferred_to_matched_pbe_scf",
+  "model_config": {
+    "basis": "gaussian",
+    "cutoff": 4.0,
+    "lmax": 4,
+    "mul": 500,
+    "num_basis": 20,
+    "num_interactions": 3,
+    "num_neighbors": 20
+  },
+  "num_atom_edges": 1548,
+  "num_atoms": 108,
+  "num_grid_points": 10077696,
+  "prediction_file": "/home/input_lbg-45644-23334529/results/almg/charge3net/full_grid_prediction.npy",
+  "prediction_integrated_electrons": 593.1212054516996,
+  "probe_batch_size": 2500,
+  "system": "almg",
+  "total_seconds": 959.559141548998,
+  "volume_A3": 1778.9454691022368,
+  "voxel_volume_A3": 0.0001765230335487632,
+  "warmup_points_excluded": 2500
+}

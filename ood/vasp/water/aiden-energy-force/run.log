@@ -1,0 +1,17 @@
+ 
+:: initializing oneAPI environment ...
+   run_properties.sh: BASH_VERSION = 5.0.17(1)-release
+   args: Using "$@" for setvars.sh arguments: 
+:: compiler -- latest
+:: debugger -- latest
+:: dev-utilities -- latest
+:: mkl -- latest
+:: mpi -- latest
+:: tbb -- latest
+:: vtune -- latest
+:: oneAPI environment initialized ::
+ 
+stage	exit_code	wall_seconds	start_utc	end_utc
+energy_force	0	1532	2026-09-06T13:19:43Z	2026-09-06T13:45:15Z
+bands	0	11643	2026-09-06T13:45:16Z	2026-09-06T16:59:19Z
+dos	0	9082	2026-09-06T16:59:20Z	2026-09-06T19:30:42Z
